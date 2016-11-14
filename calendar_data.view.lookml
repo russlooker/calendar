@@ -71,6 +71,7 @@
   - dimension: duration_tier
     type: tier
     tiers: [0,.25,.5,.75,1,1.5,2,3,4]
+    sql: ${duration}
 
 
   - measure: total_duration
