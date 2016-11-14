@@ -4,6 +4,7 @@
 
   - dimension: id
     primary_key: true
+    hidden: true
     type: number
     sql: ${TABLE}.id
 
@@ -13,9 +14,10 @@
     sql: ${TABLE}.attendees_list
 
   - dimension_group: calendar_end
+    label: 'End'
     type: time
-    timeframes: [time, date, week, month, raw]
-    sql: ${TABLE}.calendar_end_time
+    timeframes: [time, date, week, month, raw, hour, hour_of_day, quarter]
+    sql: ${TABLE}.calendar_end_time - interval '8 hours'
 
   - dimension: calendar_etl_instance_id
     hidden: true
@@ -39,14 +41,14 @@
 
   - dimension_group: inserted
     type: time
-    timeframes: [time, date, week, month, raw]
+    timeframes: [time, date, week, month, raw, hour, hour_of_day, quarter]
     sql: ${TABLE}.inserted_on
 
   - dimension_group: meeting
     label: 'Start'
     type: time
-    timeframes: [time, date, week, month, raw]
-    sql: ${TABLE}.meeting_time
+    timeframes: [time, date, week, month, raw, hour, hour_of_day, quarter]
+    sql: ${TABLE}.meeting_time - interval '8 hours'
 
   - dimension: meeting_title
     label: 'Title'
@@ -77,7 +79,7 @@
   - measure: total_duration
     type: sum
     sql: ${duration}
-    drill_fields: [inferred_company_name, meeting_time, calendar_end_time, duration, inferred_meeting_type, attendees.count]
+    drill_fields: [inferred_company_name, meeting_title, meeting_time, calendar_end_time, duration, inferred_meeting_type, attendees.count]
     value_format_name: decimal_2
     
   - measure: count
