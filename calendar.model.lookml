@@ -19,3 +19,7 @@
       type: left_outer
       relationship: one_to_many
       sql_on: ${calendar_data.id} = ${attendees.event_id}
+    - join: attendees_filter
+      type: inner
+      relationship: one_to_many
+      sql_on: ${calendar_data.id} = ${attendees_filter.event_id}

@@ -8,6 +8,7 @@
     sql: ${TABLE}.id
 
   - dimension: accepted
+    hidden: true
     type: string
     sql: ${TABLE}.accepted
 

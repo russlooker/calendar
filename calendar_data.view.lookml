@@ -8,6 +8,7 @@
     sql: ${TABLE}.id
 
   - dimension: attendees_list
+    hidden: true
     type: string
     sql: ${TABLE}.attendees_list
 
@@ -17,18 +18,22 @@
     sql: ${TABLE}.calendar_end_time
 
   - dimension: calendar_etl_instance_id
+    hidden: true
     type: number
     sql: ${TABLE}.calendar_etl_instance_id
 
   - dimension: calendar_id
+    hidden: true
     type: string
     sql: ${TABLE}.calendar_id
 
   - dimension: inferred_company_name
+    label: 'Company Name'
     type: string
     sql: ${TABLE}.inferred_company_name
 
   - dimension: inferred_meeting_type
+    label: 'Meeting Type'
     type: string
     sql: ${TABLE}.inferred_meeting_type
 
@@ -38,19 +43,23 @@
     sql: ${TABLE}.inserted_on
 
   - dimension_group: meeting
+    label: 'Start'
     type: time
     timeframes: [time, date, week, month, raw]
     sql: ${TABLE}.meeting_time
 
   - dimension: meeting_title
+    label: 'Title'
     type: string
     sql: ${TABLE}.meeting_title
 
   - dimension: opportunity_id
+    hidden: true
     type: string
     sql: ${TABLE}.opportunity_id
 
   - dimension: timezone
+    hidden: true
     type: string
     sql: ${TABLE}.timezone
 
@@ -58,6 +67,11 @@
     type: number
     sql: EXTRACT(EPOCH FROM ${calendar_end_raw} - ${meeting_raw})/(60*60)
     value_format_name: decimal_2
+
+  - dimension: duration_tier
+    type: tier
+    tiers: [0,.25,.5,.75,1,1.5,2,3,4]
+
 
   - measure: total_duration
     type: sum
